@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>s-Storyteller</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f5f7fa;
+            color: #1a2b3e;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        .page-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-radius: 24px;
+            padding: 16px 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 4px 12px rgba(0, 20, 30, 0.04);
+            border: 1px solid #eef2f6;
+        }
+        .logo-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: #2266cc;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 24px;
+        }
+        .project-name {
+            font-weight: 600;
+            font-size: 1.4rem;
+            color: #0b1a2b;
+            letter-spacing: -0.02em;
+        }
+        .badge-status {
+            background: #e8edf9;
+            color: #2266cc;
+            font-weight: 500;
+            font-size: 0.8rem;
+            padding: 6px 14px;
+            border-radius: 40px;
+            margin-left: 16px;
+            border: 1px solid #cdddfc;
+        }
+        .action-links {
+            display: flex;
+            gap: 12px;
+        }
+        .link-btn {
+            background: #f0f4fe;
+            border-radius: 30px;
+            padding: 10px 22px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: #1a2b3e;
+            text-decoration: none;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+        .link-btn:hover {
+            background: #e6edfd;
+            border-color: #2266cc;
+        }
+        .link-btn.primary {
+            background: #1a2b3e;
+            color: white;
+        }
+        .link-btn.primary:hover {
+            background: #0f1e2f;
+        }
+        .section-card {
+            background: white;
+            border-radius: 28px;
+            padding: 36px 36px;
+            margin-bottom: 28px;
+            border: 1px solid #eef2f6;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
+            transition: box-shadow 0.15s;
+        }
+        .section-card:hover {
+            box-shadow: 0 12px 30px rgba(0, 40, 80, 0.06);
+        }
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            color: #0b1a2b;
+            display: flex;
+            align-items: center;
+        }
+        h2:after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #cbd5e1, transparent);
+            margin-left: 24px;
+        }
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1e2f40;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        .feature-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #edf2f7;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .feature-list li:before {
+            content: "—";
+            color: #2266cc;
+            font-weight: 600;
+        }
+        .photo-placeholder {
+            background: #f2f6fd;
+            border-radius: 24px;
+            border: 1px dashed #b5c8e8;
+            padding: 1rem;
+            text-align: center;
+            color: #2f4870;
+            font-weight: 500;
+            margin: 20px 0 8px 0;
+            background-image: radial-gradient(circle at 30px 30px, #d5e2fc 1.5px, transparent 1px);
+            background-size: 40px 40px;
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .photo-placeholder img {
+            max-width: 100%;
+            max-height: 260px;
+            width: auto;
+            height: auto;
+            border-radius: 16px;
+            object-fit: contain;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        }
+        .photo-caption {
+            font-size: 0.9rem;
+            color: #4f6b8a;
+            background: #f2f5f9;
+            padding: 6px 16px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .team-member-card {
+            background: #f9fbfe;
+            border-radius: 24px;
+            padding: 24px;
+            border: 1px solid #e2eaf2;
+        }
+        .avatar-placeholder {
+            background: #cad9f0;
+            height: 240px;
+            border-radius: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1e3c63;
+            font-weight: 500;
+            font-size: 1rem;
+            border: 2px solid white;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            overflow: hidden;
+            padding: 0;
+        }
+        .avatar-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 22px;
+            transition: transform 0.2s;
+        }
+        .role-tag {
+            background: #e0eaff;
+            color: #1a4cba;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        hr {
+            margin: 32px 0;
+            border: 0;
+            border-top: 2px solid #ecf1f7;
+        }
+
+        /* Footer стили */
+        .footer-note {
+            background: #1a2b3e;
+            border-radius: 28px;
+            padding: 32px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .footer-note a {
+            color: #b3d0ff;
+            text-decoration: none;
+            border-bottom: 1px dashed #4f709c;
+        }
+
+        @media (max-width: 680px) {
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .navbar {
+                flex-direction: column;
+                align-items: start;
+                gap: 16px;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* дополнительные аккуратные элементы */
+        .chip {
+            background: #ecf2fa;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #1d3e6b;
+            display: inline-block;
+            border: 1px solid #d0e0ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="navbar">
+            <div class="logo-block">
+                <div class="logo-icon">📘</div>
+                <div>
+                    <span class="project-name">Storyteller</span>
+                </div>
+            </div>
+        </div>
+        <div class="section-card">
+            <h2>About project</h2>
+            <div style="max-width: 85%; margin-bottom: 1.8rem;">
+                <p style="font-size: 1.2rem; color: #1f3a5f;"><strong>«Storyteller»</strong> - This is an app that creates a fairy tale itself, or you can choose a fairy tale and have it read to you in any voice.</p>
+            </div>
+	    <h2>Why us?</h2>
+<div style="max-width: 85%; margin-bottom: 1.8rem;">
+                <p style="font-size: 1.2rem; color: #1f3a5f;">We are a team of enthusiasts who want to help children and their parents. We are ready to create a large catalog of fairy tales.</p>
+            </div>
+            <div class="grid-2">
+                <div>
+                    <h3>What problem are we solving?</h3>
+                    <p>Parents don't have time to read fairy tales to their children.</p>
+                </div>
+                <div>
+                    <h3>Innovations</h3>
+                    <ul class="feature-list">
+                        <li>AI voice acting</li>
+                        <li>You can create your own fairy tale.</li>
+                        <li>Adaptation for children</li>
+                    </ul>
+		    <div class="photo-placeholder">
+    			<img src="12.jpg" alt="Скетч персонажей">
+		    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-card">
+            <h2>Functions</h2>
+            <div class="grid-2">
+                <div> 
+                    <ul class="feature-list">
+                        <li>Creating a fairy tale</li>
+                        <li>Choosing a fairy tale</li>
+                        <li>Voice change</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="section-card">
+            <h2>What we used?</h2>
+            <div class="grid-2">
+                <div>
+                    <ul class="feature-list">
+                        <li>Python</li>
+                        <li>PySide6</li>
+                        <li>Github</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="section-card">
+            <h2>Design</h2>
+            <div style="display: flex; gap: 24px; flex-wrap: wrap;">
+                <div style="flex: 1 1 240px;">
+                    <div class="photo-placeholder" style="min-height: 150px;">
+                        <img src="123.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-card">
+            <h2>Our team</h2>
+            <div class="grid-2">
+                <div class="team-member-card">
+                    <div class="avatar-placeholder">
+                        <img src="zhan.jpg" alt="Жанибек Кенжебек">
+                    </div>
+                    <span class="role-tag">zhanibek/moral support</span>
+                    <h3>Кенжебек Жанибек</h3>
+                    <p>I can negotiate with people, and I want to help Ilik.</p>
+               
+                </div>
+                <div class="team-member-card">
+                    <div class="avatar-placeholder">
+                        <img src="nari.jpg" alt="Нариман Мурсалимов">
+                    </div>
+                    <span class="role-tag">programmer/designer</span>
+                    <h3>Нариман Мурсалимов</h3>
+                    <p>I can code in python, c++, and I know SQL and can use it in a project.</p>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="section-card">
+            <h2>Future Ideas</h2>
+            <div class="grid-2">
+                <div>
+                    <ul class="feature-list">
+                        <li>Lots of voices</li>
+                        <li>Big data base of fairy tales</li>
+                        <li>Creating better fairy tales</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-note">
+            <span>© 2026 · Storyteller</span>
+        </div>
+    </div>
+</body>
+</html>

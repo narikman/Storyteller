@@ -11,7 +11,1088 @@
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Storyteller - where voices bring stories to life</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0c10;
+            color: #e8e9ed;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, #1a1f2a, #0a0c10);
+            z-index: -2;
+        }
+        
+        .bg-gradient::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(45deg, rgba(245,180,80,0.02) 0px, rgba(245,180,80,0.02) 2px, transparent 2px, transparent 8px);
+            pointer-events: none;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .cursor-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(245, 180, 80, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            transition: transform 0.08s ease;
+        }
+
+        .page-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px 80px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .nav-tabs {
+            position: sticky;
+            top: 24px;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            background: rgba(10, 12, 16, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 80px;
+            padding: 8px 24px;
+            margin-bottom: 60px;
+            margin-top: 24px;
+            border: 1px solid rgba(245, 180, 80, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            padding: 12px 28px;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #9ca3af;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            border-radius: 60px;
+            letter-spacing: -0.2px;
+        }
+
+        .tab-btn:hover {
+            color: #f5b450;
+            background: rgba(245, 180, 80, 0.08);
+        }
+
+        .tab-btn.active {
+            color: #f5b450;
+            background: rgba(245, 180, 80, 0.15);
+            box-shadow: 0 0 12px rgba(245, 180, 80, 0.2);
+        }
+
+        .section {
+            display: none;
+            animation: fadeInUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        .section.active-section {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0 50px;
+            border-bottom: 1px solid rgba(245, 180, 80, 0.2);
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f5b450, transparent);
+        }
+
+        .hero-title {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff, #f5b450, #e08e2e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 24px;
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes titleGlow {
+            0%, 100% { filter: drop-shadow(0 0 0px rgba(245,180,80,0)); }
+            50% { filter: drop-shadow(0 0 8px rgba(245,180,80,0.3)); }
+        }
+
+        .hero-sub {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 32px;
+            margin: 48px 0;
+        }
+
+        .glass-card {
+            background: rgba(20, 23, 32, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 32px;
+            border: 1px solid rgba(245, 180, 80, 0.15);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f5b450, transparent);
+            transition: left 0.6s;
+        }
+        
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(245, 180, 80, 0.4);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #f5b450;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-list-detailed {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list-detailed li {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(245, 180, 80, 0.1);
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        
+        .feature-list-detailed li:before {
+            content: "-";
+            color: #f5b450;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .feature-title {
+            font-weight: 600;
+            color: #f5b450;
+            margin-right: 8px;
+        }
+        
+        .feature-desc {
+            color: #9ca3af;
+            font-size: 0.9rem;
+        }
+
+        .design-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin: 48px 0;
+        }
+
+        .design-item-large {
+            background: rgba(20, 23, 32, 0.5);
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.4s;
+            border: 1px solid rgba(245, 180, 80, 0.2);
+        }
+
+        .design-item-large:hover {
+            transform: scale(1.02);
+            border-color: rgba(245, 180, 80, 0.5);
+        }
+
+        .design-item-large img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .design-caption {
+            padding: 20px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(245, 180, 80, 0.1);
+        }
+
+        .team-grid-enhanced {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin: 48px 0;
+        }
+
+        .team-card-enhanced {
+            background: rgba(20, 23, 32, 0.6);
+            border-radius: 48px;
+            overflow: hidden;
+            transition: all 0.4s;
+            border: 1px solid rgba(245, 180, 80, 0.15);
+        }
+
+        .team-card-enhanced:hover {
+            transform: translateY(-8px);
+            border-color: rgba(245, 180, 80, 0.4);
+        }
+
+        .team-avatar {
+            height: 320px;
+            overflow: hidden;
+        }
+
+        .team-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .team-card-enhanced:hover .team-avatar img {
+            transform: scale(1.05);
+        }
+
+        .team-info {
+            padding: 28px;
+        }
+
+        .team-role {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #f5b450;
+            margin-bottom: 12px;
+        }
+
+        .team-name {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .team-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 16px 0;
+        }
+        
+        .skill-badge {
+            background: rgba(245, 180, 80, 0.1);
+            border: 1px solid rgba(245, 180, 80, 0.2);
+            padding: 4px 12px;
+            border-radius: 60px;
+            font-size: 0.7rem;
+            color: #f5b450;
+        }
+
+        .timeline {
+            margin: 48px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 24px;
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(245, 180, 80, 0.15);
+            transition: transform 0.3s;
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(12px);
+        }
+
+        .timeline-date {
+            min-width: 140px;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 600;
+            color: #f5b450;
+            font-size: 1.1rem;
+        }
+
+        .timeline-content {
+            color: #cbd5e6;
+        }
+
+        .sponsor-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 48px;
+            margin: 48px 0;
+            background: linear-gradient(135deg, rgba(245, 180, 80, 0.05), rgba(0, 0, 0, 0.2));
+            border-radius: 64px;
+            padding: 48px;
+            border: 1px solid rgba(245, 180, 80, 0.2);
+        }
+
+        .sponsor-portrait {
+            border-radius: 40px;
+            overflow: hidden;
+            height: 400px;
+        }
+
+        .sponsor-portrait img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sponsor-quote {
+            font-size: 1.4rem;
+            line-height: 1.5;
+            font-style: normal;
+            color: #e8e9ed;
+            margin-bottom: 24px;
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        .sponsor-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f5b450;
+            margin-bottom: 8px;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 24px 0;
+        }
+
+        .tech-badge {
+            background: rgba(245, 180, 80, 0.1);
+            border: 1px solid rgba(245, 180, 80, 0.3);
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .tech-badge:hover {
+            background: rgba(245, 180, 80, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            text-align: center;
+            border-top: 1px solid rgba(245, 180, 80, 0.15);
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+        
+        .conversation {
+            margin: 48px 0;
+        }
+        
+        .convo-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .convo-badge {
+            display: inline-block;
+            background: rgba(245, 180, 80, 0.15);
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-size: 0.8rem;
+            color: #f5b450;
+            margin-bottom: 20px;
+        }
+        
+        .chat-thread {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .message-row {
+            display: flex;
+            gap: 20px;
+            animation: slideIn 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .message-row:nth-child(1) { animation-delay: 0.05s; }
+        .message-row:nth-child(2) { animation-delay: 0.1s; }
+        .message-row:nth-child(3) { animation-delay: 0.15s; }
+        .message-row:nth-child(4) { animation-delay: 0.2s; }
+        .message-row:nth-child(5) { animation-delay: 0.25s; }
+        .message-row:nth-child(6) { animation-delay: 0.3s; }
+        .message-row:nth-child(7) { animation-delay: 0.35s; }
+        .message-row:nth-child(8) { animation-delay: 0.4s; }
+        .message-row:nth-child(9) { animation-delay: 0.45s; }
+        .message-row:nth-child(10) { animation-delay: 0.5s; }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .message-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f5b450, #c97e2a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Space Grotesk', monospace;
+            flex-shrink: 0;
+        }
+        
+        .message-avatar.sponsor {
+            background: linear-gradient(135deg, #4a5568, #2d3748);
+        }
+        
+        .message-content {
+            flex: 1;
+            background: rgba(30, 33, 44, 0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 20px 24px;
+            border: 1px solid rgba(245, 180, 80, 0.15);
+            transition: all 0.3s;
+        }
+        
+        .message-content:hover {
+            border-color: rgba(245, 180, 80, 0.4);
+            transform: translateX(4px);
+        }
+        
+        .message-sender {
+            font-weight: 600;
+            color: #f5b450;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            letter-spacing: -0.2px;
+        }
+        
+        .message-text {
+            color: #cbd5e6;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+        
+        .message-text strong {
+            color: #f5b450;
+        }
+        
+        .reflection-block {
+            background: linear-gradient(135deg, rgba(245, 180, 80, 0.08), rgba(0, 0, 0, 0.3));
+            border-radius: 48px;
+            padding: 40px;
+            margin-top: 32px;
+            border-left: 3px solid #f5b450;
+        }
+        
+        .reflection-title {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.3rem;
+            color: #f5b450;
+            margin-bottom: 24px;
+        }
+        
+        .reflection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+        }
+        
+        .reflection-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 24px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .reflection-item:hover {
+            transform: translateY(-4px);
+            background: rgba(245, 180, 80, 0.05);
+        }
+        
+        .reflection-q {
+            font-size: 0.8rem;
+            color: #f5b450;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+        
+        .reflection-a {
+            color: #e8e9ed;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 32px;
+            margin: 40px 0;
+            padding: 32px;
+            background: rgba(20, 23, 32, 0.4);
+            border-radius: 48px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #f5b450;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #9ca3af;
+            margin-top: 8px;
+        }
+        
+        @media (max-width: 900px) {
+            .design-gallery, .team-grid-enhanced, .sponsor-showcase {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .hero-title {
+                font-size: 3rem;
+            }
+            .page-wrapper {
+                padding: 0 20px 60px;
+            }
+            .message-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .message-avatar {
+                width: 40px;
+                height: 40px;
+            }
+            .timeline-item {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .timeline-date {
+                min-width: auto;
+            }
+        }
+        
+        .floating-shape {
+            position: fixed;
+            bottom: 10%;
+            right: 5%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(245,180,80,0.03) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatShape 20s infinite ease-in-out;
+        }
+        
+        @keyframes floatShape {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-30px, -20px) scale(1.1); }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-gradient"></div>
+<div class="noise"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="floating-shape"></div>
+
+<div class="page-wrapper">
+    <div class="nav-tabs">
+        <button class="tab-btn active" data-tab="core">core</button>
+        <button class="tab-btn" data-tab="design">design</button>
+        <button class="tab-btn" data-tab="team">team</button>
+        <button class="tab-btn" data-tab="interview">interview</button>
+        <button class="tab-btn" data-tab="roadmap">roadmap</button>
+    </div>
+
+    <!-- Core Section -->
+    <div class="section active-section" id="core">
+        <div class="hero">
+            <h1 class="hero-title">Storyteller</h1>
+            <p class="hero-sub">where artificial intelligence meets the ancient art of storytelling - bringing voices to tales that never existed before</p>
+        </div>
+        
+        <div class="stats-row">
+            <div class="stat-item">
+                <div class="stat-number">5</div>
+                <div class="stat-label">built-in voices now</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">20+</div>
+                <div class="stat-label">voices coming soon</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10+</div>
+                <div class="stat-label">original tales</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">2min</div>
+                <div class="stat-label">to create a tale</div>
+            </div>
+        </div>
+
+        <div class="card-grid">
+            <div class="glass-card">
+                <div class="card-title">the problem</div>
+                <p style="color: #cbd5e6; line-height: 1.6;">parents are busier than ever - reading time has become a luxury. children spend hours on passive screens, missing the warmth of shared stories. we believe every child deserves a bedtime tale, even on the busiest days.</p>
+            </div>
+            <div class="glass-card">
+                <div class="card-title">the solution</div>
+                <p style="color: #cbd5e6; line-height: 1.6;">an ai companion that generates unique fairy tales in seconds, narrated by warm voices. parents can create personalized stories with chosen characters, settings, and morals - making every night magical.</p>
+            </div>
+            <div class="glass-card">
+                <div class="card-title">the magic</div>
+                <p style="color: #cbd5e6; line-height: 1.6;">ai-generated narratives adapt to each child's age and interests. currently 5 built-in voices - expanding to 20+ voices including parents, friendly monsters, and wizards in future updates.</p>
+            </div>
+        </div>
+        
+        <div class="glass-card" style="margin-top: 24px;">
+            <div class="card-title">magical functions</div>
+            <ul class="feature-list-detailed">
+                <li><span class="feature-title">create your own fairy tale</span> - <span class="feature-desc">choose heroes, settings, moral lessons. ai crafts a unique story in under 2 minutes.</span></li>
+                <li><span class="feature-title">rich tale catalog</span> - <span class="feature-desc">10+ original stories with new tales added monthly. classics reimagined for modern children.</span></li>
+                <li><span class="feature-title">voice narration</span> - <span class="feature-desc">5 built-in voices now - warm, friendly, adventurous. expanding to 20+ including parent voice cloning in future updates.</span></li>
+                <li><span class="feature-title">ai co-writer</span> - <span class="feature-desc">parents describe what they want - ai builds a complete story structure with characters, plot, and gentle lessons.</span></li>
+                <li><span class="feature-title">bilingual mode</span> - <span class="feature-desc">stories in english and native languages. helps children learn naturally through emotional connection.</span></li>
+            </ul>
+        </div>
+
+        <div class="glass-card" style="margin-top: 24px;">
+            <div class="card-title">prototype preview</div>
+            <div style="margin-top: 20px; border-radius: 24px; overflow: hidden;">
+                <img src="123.jpg" alt="prototype" style="width: 100%; max-height: 400px; object-fit: contain; background: #0f1118; border-radius: 24px;" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 400%22%3E%3Crect width=%22800%22 height=%22400%22 fill=%22%231a1e2a%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3Eprototype interface%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div class="design-caption" style="border-top: none; padding-top: 16px;">full app prototype - main screen design with voice selection panel</div>
+        </div>
+    </div>
+
+    <!-- Design Section -->
+    <div class="section" id="design">
+        <div class="hero">
+            <h1 class="hero-title">visual language</h1>
+            <p class="hero-sub">crafting interfaces that feel like turning pages of a magical book</p>
+        </div>
+        <div class="design-gallery">
+            <div class="design-item-large">
+                <img src="design1.jpg" alt="home screen" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 280%22%3E%3Crect width=%22400%22 height=%22280%22 fill=%22%23202230%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3Ehome concept%3C/text%3E%3C/svg%3E'">
+                <div class="design-caption">home screen - tale catalog and creation entry</div>
+            </div>
+            <div class="design-item-large">
+                <img src="design2.jpg" alt="creation flow" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 280%22%3E%3Crect width=%22400%22 height=%22280%22 fill=%22%23202230%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3Estory creation%3C/text%3E%3C/svg%3E'">
+                <div class="design-caption">story builder - choose hero, setting, and moral</div>
+            </div>
+            <div class="design-item-large">
+                <img src="design3.jpg" alt="reading mode" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 280%22%3E%3Crect width=%22400%22 height=%22280%22 fill=%22%23202230%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3Ereading mode%3C/text%3E%3C/svg%3E'">
+                <div class="design-caption">immersive reading mode with ambient visuals</div>
+            </div>
+            <div class="design-item-large">
+                <img src="design4.jpg" alt="voice panel" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 280%22%3E%3Crect width=%22400%22 height=%22280%22 fill=%22%23202230%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3Evoice selection%3C/text%3E%3C/svg%3E'">
+                <div class="design-caption">voice library - 5 voices now, 20+ coming soon</div>
+            </div>
+        </div>
+        <div class="glass-card">
+            <div class="card-title">platform evolution</div>
+            <p style="color: #cbd5e6; margin-bottom: 16px;">currently available as web version and desktop app (windows/mac). responsive design works on tablets. mobile apps for ios and android are planned for late 2026.</p>
+            <div class="tech-stack">
+                <span class="tech-badge">web first</span>
+                <span class="tech-badge">desktop app</span>
+                <span class="tech-badge">mobile 2026</span>
+                <span class="tech-badge">cross-platform</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section - Enhanced with detailed roles and skills -->
+    <div class="section" id="team">
+        <div class="hero">
+            <h1 class="hero-title">the storytellers</h1>
+            <p class="hero-sub">two creators who believe in the power of narrative</p>
+        </div>
+        <div class="team-grid-enhanced">
+            <div class="team-card-enhanced">
+                <div class="team-avatar">
+                    <img src="zhan.jpg" alt="Kenzhebek Zhanibek" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 320%22%3E%3Crect width=%22400%22 height=%22320%22 fill=%22%23202230%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3EZhanibek%3C/text%3E%3C/svg%3E'">
+                </div>
+                <div class="team-info">
+                    <div class="team-role">idea architect - visionary - negotiator</div>
+                    <div class="team-name">Kenzhebek Zhanibek</div>
+                    <div class="team-skills">
+                        <span class="skill-badge">product vision</span>
+                        <span class="skill-badge">story structure</span>
+                        <span class="skill-badge">user research</span>
+                        <span class="skill-badge">team coordination</span>
+                    </div>
+                    <p style="color: #9ca3af; line-height: 1.5;">"stories shape our childhood. i'm building storyteller to help parents connect with children even on busy days - because every child deserves magic before sleep. i bridge ideas between our team and the families we serve."</p>
+                </div>
+            </div>
+            <div class="team-card-enhanced">
+                <div class="team-avatar">
+                    <img src="nari.jpg" alt="Nariman Mursalimov" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 320%22%3E%3Crect width=%22400%22 height=%22320%22 fill=%22%23202230%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3ENariman%3C/text%3E%3C/svg%3E'">
+                </div>
+                <div class="team-info">
+                    <div class="team-role">engineer - interface designer - ai specialist</div>
+                    <div class="team-name">Nariman Mursalimov</div>
+                    <div class="team-skills">
+                        <span class="skill-badge">python</span>
+                        <span class="skill-badge">pyside6</span>
+                        <span class="skill-badge">openai api</span>
+                        <span class="skill-badge">sql</span>
+                        <span class="skill-badge">c++</span>
+                        <span class="skill-badge">ui/ux</span>
+                    </div>
+                    <p style="color: #9ca3af; line-height: 1.5;">"python, c++, sql - but my real passion is building experiences that help children learn. i'm crafting the ai soul of storyteller, making voices feel alive. i handle the entire technical architecture from backend to frontend."</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="glass-card">
+            <div class="card-title">technology stack - what we used</div>
+            <div class="tech-stack" style="margin-bottom: 24px;">
+                <span class="tech-badge">python 3.11</span>
+                <span class="tech-badge">pyside6 (qt)</span>
+                <span class="tech-badge">openai api (gpt-4)</span>
+                <span class="tech-badge">elevenlabs tts</span>
+                <span class="tech-badge">sqlite</span>
+                <span class="tech-badge">git - github</span>
+                <span class="tech-badge">fastapi (backend)</span>
+                <span class="tech-badge">html - css - js</span>
+            </div>
+            <p style="color: #9ca3af; font-size: 0.9rem;">the core application is built with python and pyside6 for desktop experience. openai api generates unique story structures based on user input. tts engine provides natural voice narration. we're continuously improving the ai pipeline to make stories more engaging and voices more expressive.</p>
+        </div>
+    </div>
+
+    <!-- Interview Section -->
+    <div class="section" id="interview">
+        <div class="hero">
+            <h1 class="hero-title">the conversation</h1>
+            <p class="hero-sub">a dialogue between our sponsor and the storyteller team</p>
+        </div>
+        
+        <div class="conversation">
+            <div class="convo-header">
+                <div class="convo-badge">- five questions - five reflections -</div>
+            </div>
+            
+            <div class="chat-thread">
+                <div class="message-row">
+                    <div class="message-avatar sponsor">KI</div>
+                    <div class="message-content">
+                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-text">why are you interested in educational projects? what drives you to build something for children?</div>
+                    </div>
+                </div>
+                <div class="message-row">
+                    <div class="message-avatar">ST</div>
+                    <div class="message-content">
+                        <div class="message-sender">storyteller team</div>
+                        <div class="message-text">because we believe technology should serve <strong>human connection</strong>, not replace it. educational projects allow us to create tools that empower families. when a parent hears their child laugh at a story we helped generate - that's the moment we live for.</div>
+                    </div>
+                </div>
+                
+                <div class="message-row">
+                    <div class="message-avatar sponsor">KI</div>
+                    <div class="message-content">
+                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-text">do you use educational applications yourself? what do you look for in them?</div>
+                    </div>
+                </div>
+                <div class="message-row">
+                    <div class="message-avatar">ST</div>
+                    <div class="message-content">
+                        <div class="message-sender">storyteller team</div>
+                        <div class="message-text">daily. duolingo, khan academy, interactive coding platforms. we look for <strong>engagement without overwhelm</strong>. the best apps make learning feel like play. that's exactly what we're building - a place where stories become adventures, not homework.</div>
+                    </div>
+                </div>
+                
+                <div class="message-row">
+                    <div class="message-avatar sponsor">KI</div>
+                    <div class="message-content">
+                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-text">why is learning languages through fairy tales important to you?</div>
+                    </div>
+                </div>
+                <div class="message-row">
+                    <div class="message-avatar">ST</div>
+                    <div class="message-content">
+                        <div class="message-sender">storyteller team</div>
+                        <div class="message-text">fairy tales are <strong>emotional anchors</strong>. a child doesn't just memorize a word - they remember the dragon who said it, the princess who whispered it. vocabulary learned through stories sticks for life. plus, bilingual tales help children connect with their heritage while learning new languages.</div>
+                    </div>
+                </div>
+                
+                <div class="message-row">
+                    <div class="message-avatar sponsor">KI</div>
+                    <div class="message-content">
+                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-text">what key features should this app have to truly serve families?</div>
+                    </div>
+                </div>
+                <div class="message-row">
+                    <div class="message-avatar">ST</div>
+                    <div class="message-content">
+                        <div class="message-sender">storyteller team</div>
+                        <div class="message-text"><strong>simplicity first</strong> - no confusing menus. <strong>voice variety</strong> - because every child has a favorite voice. <strong>offline mode</strong> - bedtime stories shouldn't need wifi. <strong>parental controls</strong> - peace of mind. and most importantly - <strong>warmth</strong>. the app should feel like a hug, not a robot.</div>
+                    </div>
+                </div>
+                
+                <div class="message-row">
+                    <div class="message-avatar sponsor">KI</div>
+                    <div class="message-content">
+                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-text">is this project realistic for students? can you actually deliver?</div>
+                    </div>
+                </div>
+                <div class="message-row">
+                    <div class="message-avatar">ST</div>
+                    <div class="message-content">
+                        <div class="message-sender">storyteller team</div>
+                        <div class="message-text"><strong>already have a working prototype</strong> with python + openai api. we've tested story generation, voice synthesis, and basic interface. with mentorship and the next few months, we'll launch a beta by summer 2026. we're students, yes - but we're also builders who ship.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reflection-block">
+                <div class="reflection-title">- what we learned from ilyas -</div>
+                <div class="reflection-grid">
+                    <div class="reflection-item">
+                        <div class="reflection-q">on simplicity</div>
+                        <div class="reflection-a">"if a 5-year-old can't navigate it in 10 seconds, redesign it." - ilyas reminded us that our audience is children, not tech reviewers.</div>
+                    </div>
+                    <div class="reflection-item">
+                        <div class="reflection-q">on voice</div>
+                        <div class="reflection-a">"my sisters skip stories with boring voices. make every voice feel like a character, not a narrator." - we're expanding to 20+ expressive voices.</div>
+                    </div>
+                    <div class="reflection-item">
+                        <div class="reflection-q">on bilingual future</div>
+                        <div class="reflection-a">"children in kazakhstan should hear tales in both languages. it's not just education - it's identity." - full bilingual library by 2027.</div>
+                    </div>
+                    <div class="reflection-item">
+                        <div class="reflection-q">on realism</div>
+                        <div class="reflection-a">"you're students. use that energy. build fast, test with real families, iterate." - that's exactly our roadmap.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sponsor-showcase">
+            <div class="sponsor-portrait">
+                <img src="ilik.jpg" alt="Kuatbek Ilyas" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 400%22%3E%3Crect width=%22400%22 height=%22400%22 fill=%22%23202230%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3EIlyas%3C/text%3E%3C/svg%3E'">
+            </div>
+            <div>
+                <div class="sponsor-name">Kuatbek Ilyas</div>
+                <div style="margin-bottom: 20px;"><span class="tech-badge">sponsor - advisor - believer</span></div>
+                <div class="sponsor-quote">"fairy tales help develop speech, thinking, and bilingual abilities. the app must be colorful, kind, and simple - no overcomplicated menus."</div>
+                <p style="color: #9ca3af; line-height: 1.6;">ilyas has three younger sisters - he knows exactly how children engage with stories. he believes technology can be a bridge to imagination, not a screen prison. his guidance helps us stay focused on what matters: simplicity and emotional connection. his questions pushed us to think deeper, and his support gives us the confidence to build.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Roadmap Section -->
+    <div class="section" id="roadmap">
+        <div class="hero">
+            <h1 class="hero-title">the path forward</h1>
+            <p class="hero-sub">building the future of storytelling, one milestone at a time</p>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">summer 2026</div>
+                <div class="timeline-content">mvp launch - 10 original tales + ai story builder (web version). initial testing with 50 families. feedback collection begins.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">autumn 2026</div>
+                <div class="timeline-content">voice expansion from 5 to 15+ voices. improved tts quality. community feedback integration. first public beta.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">late 2026</div>
+                <div class="timeline-content">ios and android companion apps development begins. cross-platform synchronization. offline mode implementation.</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2027</div>
+                <div class="timeline-content">full bilingual library (english + 5 other languages). ai illustration generation while reading. school program partnerships. 20+ voices released.</div>
+            </div>
+        </div>
+
+        <div class="glass-card">
+            <div class="card-title">beyond the roadmap</div>
+            <p style="color: #cbd5e6; margin-bottom: 20px;">we're dreaming bigger: custom ai model fine-tuned specifically for children's stories, a platform where parents can share their own created tales with the community, and partnerships with children's authors to bring authentic voices into the library.</p>
+            <div class="tech-stack">
+                <span class="tech-badge">custom ai model</span>
+                <span class="tech-badge">20+ voices</span>
+                <span class="tech-badge">community library</span>
+                <span class="tech-badge">school integration</span>
+                <span class="tech-badge">author partnerships</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div>storyteller - 2026</div>
+        <div style="margin-top: 12px; font-size: 0.75rem;">where ai meets bedtime magic</div>
+    </div>
+</div>
+
+<script>
+    const cursorGlow = document.getElementById('cursorGlow');
+    document.addEventListener('mousemove', (e) => {
+        cursorGlow.style.transform = `translate(${e.clientX - 250}px, ${e.clientY - 250}px)`;
+    });
+
+    const tabs = document.querySelectorAll('.tab-btn');
+    const sections = document.querySelectorAll('.section');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetId = tab.getAttribute('data-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            sections.forEach(section => section.classList.remove('active-section'));
+            document.getElementById(targetId).classList.add('active-section');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    function createParticles() {
+        for(let i = 0; i < 50; i++) {
+            let span = document.createElement('span');
+            span.style.position = 'fixed';
+            span.style.width = '2px';
+            span.style.height = '2px';
+            span.style.background = 'rgba(245, 180, 80, 0.2)';
+            span.style.borderRadius = '50%';
+            span.style.left = Math.random() * 100 + '%';
+            span.style.top = Math.random() * 100 + '%';
+            span.style.pointerEvents = 'none';
+            span.style.zIndex = '0';
+            span.style.animation = `floatSparkle ${20 + Math.random() * 30}s infinite ease-in-out`;
+            document.body.appendChild(span);
+        }
+    }
+    
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes floatSparkle {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            20% { opacity: 0.5; }
+            80% { opacity: 0.3; }
+            100% { transform: translateY(-100vh) translateX(30px); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+    createParticles();
+</script>
+</body>
+</html>
         }
 
         body {

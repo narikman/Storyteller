@@ -1,439 +1,695 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>s-Storyteller</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Storyteller — AI-powered living tales for kids</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background-color: #f5f7fa;
-            color: #1a2b3e;
+            background: #fefaf5;
+            color: #1e2a3e;
             line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        /* animated magical gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(255,245,225,0.7) 0%, rgba(252,242,230,0.95) 100%);
+            z-index: -2;
+        }
+        /* floating fairy dust animation - enhanced */
+        .glitter {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        .glitter span {
+            position: absolute;
+            background: rgba(255,200,100,0.6);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: floatSparkle 14s infinite ease-in-out;
+            box-shadow: 0 0 8px rgba(255,215,0,0.5);
+        }
+        @keyframes floatSparkle {
+            0% { transform: translateY(0vh) translateX(0) scale(0.6); opacity: 0; }
+            30% { opacity: 1; }
+            100% { transform: translateY(-30vh) translateX(20px) scale(1.3); opacity: 0; }
         }
         .page-wrapper {
-            max-width: 1280px;
+            max-width: 1320px;
             margin: 0 auto;
-            padding: 32px 24px;
+            padding: 0 24px 60px;
+            position: relative;
         }
+        /* STICKY NAVBAR - always on top */
         .navbar {
+            position: sticky;
+            top: 16px;
+            z-index: 1000;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: white;
-            border-radius: 24px;
-            padding: 16px 32px;
-            margin-bottom: 32px;
-            box-shadow: 0 4px 12px rgba(0, 20, 30, 0.04);
-            border: 1px solid #eef2f6;
+            background: rgba(255, 252, 245, 0.95);
+            backdrop-filter: blur(16px);
+            border-radius: 80px;
+            padding: 10px 28px;
+            margin-bottom: 44px;
+            margin-top: 16px;
+            box-shadow: 0 8px 28px -6px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255,235,205,0.9);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            flex-wrap: wrap;
+        }
+        .navbar.scrolled {
+            background: rgba(255, 252, 245, 0.98);
+            box-shadow: 0 12px 32px -10px rgba(0,0,0,0.12);
+            backdrop-filter: blur(20px);
         }
         .logo-block {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
         }
         .logo-icon {
-            width: 44px;
-            height: 44px;
-            background: #2266cc;
-            border-radius: 16px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #f3b45b, #e07c2c);
+            border-radius: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-weight: 700;
-            font-size: 24px;
+            font-size: 28px;
+            box-shadow: 0 10px 18px -6px rgba(224,124,44,0.4);
+            animation: gentleFloat 3s infinite alternate;
+            transition: transform 0.2s;
+        }
+        .logo-icon:hover {
+            transform: scale(1.02);
+        }
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-6px); }
         }
         .project-name {
-            font-weight: 600;
-            font-size: 1.4rem;
-            color: #0b1a2b;
+            font-weight: 800;
+            font-size: 1.7rem;
             letter-spacing: -0.02em;
+            background: linear-gradient(125deg, #4a2e1a, #b45f2b);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
         }
-        .badge-status {
-            background: #e8edf9;
-            color: #2266cc;
-            font-weight: 500;
-            font-size: 0.8rem;
-            padding: 6px 14px;
-            border-radius: 40px;
-            margin-left: 16px;
-            border: 1px solid #cdddfc;
-        }
-        .action-links {
+        /* navigation buttons */
+        .nav-links {
             display: flex;
             gap: 12px;
+            flex-wrap: wrap;
         }
-        .link-btn {
-            background: #f0f4fe;
-            border-radius: 30px;
-            padding: 10px 22px;
-            font-weight: 500;
-            font-size: 0.95rem;
-            color: #1a2b3e;
-            text-decoration: none;
-            border: 1px solid transparent;
-            transition: 0.2s;
+        .nav-btn {
+            background: rgba(245, 225, 204, 0.6);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #b45f2b;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+            font-family: inherit;
+            backdrop-filter: blur(4px);
         }
-        .link-btn:hover {
-            background: #e6edfd;
-            border-color: #2266cc;
+        .nav-btn:hover {
+            background: #f0cfaa;
+            color: #7a3e1a;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
         }
-        .link-btn.primary {
-            background: #1a2b3e;
-            color: white;
+        .nav-btn:active {
+            transform: translateY(1px);
         }
-        .link-btn.primary:hover {
-            background: #0f1e2f;
+        .badge-status {
+            background: #f7e5cf;
+            color: #b45f2b;
+            font-weight: 600;
+            font-size: 0.75rem;
+            padding: 6px 16px;
+            border-radius: 60px;
+            border: 1px solid #fadcb9;
         }
         .section-card {
-            background: white;
-            border-radius: 28px;
-            padding: 36px 36px;
-            margin-bottom: 28px;
-            border: 1px solid #eef2f6;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02);
-            transition: box-shadow 0.15s;
+            background: rgba(255, 252, 245, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 56px;
+            padding: 44px 44px;
+            margin-bottom: 36px;
+            border: 1px solid #fff2e2;
+            box-shadow: 0 24px 42px -16px rgba(0,0,0,0.06);
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow 0.4s ease;
         }
         .section-card:hover {
-            box-shadow: 0 12px 30px rgba(0, 40, 80, 0.06);
+            transform: translateY(-5px);
+            box-shadow: 0 32px 52px -20px rgba(0,0,0,0.12);
         }
         h2 {
-            font-size: 2rem;
-            font-weight: 600;
+            font-size: 2.4rem;
+            font-weight: 750;
             letter-spacing: -0.02em;
-            margin-bottom: 24px;
-            color: #0b1a2b;
+            margin-bottom: 28px;
+            color: #2c221b;
             display: flex;
             align-items: center;
+            gap: 14px;
+        }
+        h2 .deco-icon {
+            font-size: 2.2rem;
+            filter: drop-shadow(0 6px 8px rgba(0,0,0,0.1));
+            transition: transform 0.2s;
+        }
+        h2:hover .deco-icon {
+            transform: scale(1.05) rotate(3deg);
         }
         h2:after {
             content: '';
             flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, #cbd5e1, transparent);
-            margin-left: 24px;
+            height: 3px;
+            background: linear-gradient(90deg, #f5c396, #ffecd6, transparent);
+            border-radius: 6px;
         }
         h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #1e2f40;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: #3d2a19;
         }
         .grid-2 {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 32px;
+            gap: 42px;
+        }
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        @media (max-width: 900px) {
+            .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        }
+        @media (max-width: 550px) {
+            .grid-4 { grid-template-columns: 1fr; gap: 20px; }
         }
         .feature-list {
             list-style: none;
             padding: 0;
         }
         .feature-list li {
-            padding: 10px 0;
-            border-bottom: 1px solid #edf2f7;
+            padding: 12px 0;
+            border-bottom: 1px solid #f3e5d5;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 14px;
+            font-weight: 500;
+            transition: transform 0.2s, padding-left 0.2s;
+        }
+        .feature-list li:hover {
+            transform: translateX(6px);
+            padding-left: 4px;
         }
         .feature-list li:before {
-            content: "—";
-            color: #2266cc;
-            font-weight: 600;
+            content: "✨";
+            color: #e07c2c;
+            font-weight: normal;
+            transition: transform 0.2s;
+            display: inline-block;
         }
-        .photo-placeholder {
-            background: #e1e1e3	;
-            border-radius: 24px;
-            border: 1px dashed #b5c8e8;
-            padding: 1rem;
+        .feature-list li:hover:before {
+            transform: scale(1.2) rotate(10deg);
+        }
+        .photo-frame {
+            background: #fff4e8;
+            border-radius: 32px;
+            border: 2px dashed #f7cfaa;
+            padding: 1.2rem;
             text-align: center;
-            color: #2f4870;
-            font-weight: 500;
-            margin: 20px 0 8px 0;
-            background-size: 40px 40px;
-            min-height: 280px;
+            transition: all 0.3s ease;
+            min-height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow: hidden;
         }
-        .photo-placeholder img {
+        .photo-frame img {
             max-width: 100%;
-            max-height: 280px;
+            max-height: 240px;
             width: auto;
             height: auto;
-            border-radius: 16px;
+            border-radius: 24px;
             object-fit: contain;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+        }
+        .photo-frame img:hover {
+            transform: scale(1.03);
         }
         .photo-caption {
-            font-size: 0.9rem;
-            color: #4f6b8a;
-            background: #f2f5f9;
-            padding: 6px 16px;
-            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #b67b44;
+            background: #fef2e6;
+            padding: 5px 18px;
+            border-radius: 40px;
             display: inline-block;
-            margin-top: 4px;
+            margin-top: 12px;
         }
-        .team-member-card {
-            background: #f9fbfe;
-            border-radius: 24px;
-            padding: 24px;
-            border: 1px solid #e2eaf2;
+        .design-item {
+            background: #fffbf5;
+            border-radius: 28px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid #fae6d2;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2);
         }
-        .avatar-placeholder {
-            background: #cad9f0;
-            height: 240px;
-            border-radius: 24px;
-            margin-bottom: 20px;
+        .design-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.12);
+            border-color: #f0cfaa;
+        }
+        .design-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border-radius: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            background: #fef7f0;
+            transition: transform 0.3s;
+        }
+        .design-item img:hover {
+            transform: scale(1.01);
+        }
+        .team-card {
+            background: #fffbf5;
+            border-radius: 32px;
+            padding: 28px;
+            border: 1px solid #fae6d2;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.2);
+        }
+        .team-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 32px -12px rgba(0,0,0,0.1);
+        }
+        .avatar-frame {
+            background: #f9e3cf;
+            height: 260px;
+            border-radius: 36px;
+            margin-bottom: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1e3c63;
-            font-weight: 500;
-            font-size: 1rem;
-            border: 2px solid white;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
             overflow: hidden;
-            padding: 0;
+            box-shadow: 0 12px 20px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
         }
-        .avatar-placeholder img {
+        .team-card:hover .avatar-frame {
+            transform: scale(1.01);
+        }
+        .avatar-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 22px;
-            transition: transform 0.2s;
+            border-radius: 32px;
+            transition: transform 0.4s;
         }
         .role-tag {
-            background: #e0eaff;
-            color: #1a4cba;
-            padding: 4px 16px;
-            border-radius: 40px;
+            background: #fae2cd;
+            color: #c26a2e;
+            padding: 6px 18px;
+            border-radius: 60px;
             font-size: 0.8rem;
-            font-weight: 600;
+            font-weight: 700;
             display: inline-block;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
+            transition: all 0.2s;
         }
-
-        hr {
-            margin: 32px 0;
-            border: 0;
-            border-top: 2px solid #ecf1f7;
+        .team-card:hover .role-tag {
+            background: #f0cfaa;
+            transform: translateX(4px);
         }
-
-        /* Footer стили */
+        .sponsor-block {
+            background: linear-gradient(115deg, #fff6ed, #fffbf4);
+            border-radius: 48px;
+            padding: 12px;
+        }
+        .chip {
+            background: #f5e2d0;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #a45925;
+            transition: all 0.2s;
+        }
+        .chip:hover {
+            background: #f0cfaa;
+            transform: translateY(-1px);
+        }
         .footer-note {
-            background: #1a2b3e;
-            border-radius: 28px;
-            padding: 32px;
-            color: white;
+            background: #2c241c;
+            border-radius: 48px;
+            padding: 32px 36px;
+            color: #fae6d2;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
             margin-top: 40px;
+            transition: all 0.3s;
         }
-
-        .footer-note a {
-            color: #b3d0ff;
-            text-decoration: none;
-            border-bottom: 1px dashed #4f709c;
-        }
-
-        @media (max-width: 680px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-            }
-            .navbar {
-                flex-direction: column;
-                align-items: start;
-                gap: 16px;
-            }
-            h2 {
-                font-size: 1.8rem;
-            }
-        }
-
-        /* дополнительные аккуратные элементы */
-        .chip {
-            background: #ecf2fa;
-            padding: 4px 16px;
+        .future-badge {
+            background: #fff0e0;
             border-radius: 40px;
-            font-size: 0.9rem;
-            color: #1d3e6b;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #b45a2c;
             display: inline-block;
-            border: 1px solid #d0e0ff;
+            transition: all 0.2s;
+        }
+        .future-badge:hover {
+            background: #fae2cd;
+            transform: translateY(-2px);
+        }
+        @media (max-width: 780px) {
+            .grid-2 { grid-template-columns: 1fr; gap: 32px; }
+            .section-card { padding: 32px 24px; }
+            h2 { font-size: 1.9rem; }
+            .navbar { flex-direction: column; align-items: stretch; gap: 12px; top: 8px; }
+            .nav-links { justify-content: center; }
+            .logo-block { justify-content: space-between; }
+        }
+        .story-badge {
+            background: #f5e1cc;
+            border-radius: 80px;
+            padding: 10px 22px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: default;
+        }
+        .story-badge:hover {
+            background: #f0cfaa;
+            transform: scale(1.01);
+        }
+        .float-animation {
+            animation: softBounce 2s infinite ease;
+        }
+        @keyframes softBounce {
+            0%,100%{ transform: translateY(0);}
+            50%{ transform: translateY(-6px);}
+        }
+        .prototype-frame {
+            background: linear-gradient(135deg, #fff4e8, #fffbf0);
+            border-radius: 40px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            border: 2px solid #f7cfaa;
+            transition: all 0.3s;
+        }
+        .prototype-frame:hover {
+            transform: scale(1.01);
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+        }
+        .prototype-frame img {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
+        }
+        /* scroll reveal animation */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section-card {
+            animation: fadeUp 0.6s ease-out forwards;
         }
     </style>
 </head>
 <body>
-    <div class="page-wrapper">
-        <div class="navbar">
-            <div class="logo-block">
-                <div class="logo-icon">📘</div>
-                <div>
-                    <span class="project-name">Storyteller</span>
+<div class="glitter" id="glitterContainer"></div>
+<div class="page-wrapper">
+    <div class="navbar" id="navbar">
+        <div class="logo-block">
+            <div class="logo-icon">📖✨</div>
+            <div>
+                <span class="project-name">Storyteller</span>
+                <div class="badge-status" style="margin-top: 6px;">AI · voice · magic tales</div>
+            </div>
+        </div>
+        <div class="nav-links">
+            <button class="nav-btn" data-target="design">🎨 Design</button>
+            <button class="nav-btn" data-target="team">👥 Team</button>
+            <button class="nav-btn" data-target="tech">⚙️ Tech</button>
+            <button class="nav-btn" data-target="sponsor">🤝 Sponsor</button>
+            <button class="nav-btn" data-target="roadmap">🌱 Roadmap</button>
+        </div>
+        <div class="story-badge">
+            <span>🎧</span> "Every child deserves a living tale"
+        </div>
+    </div>
+
+    <!-- HERO / core idea expanded -->
+    <div class="section-card">
+        <h2><span class="deco-icon">🌟</span> The Core Idea: Living Tales</h2>
+        <div style="max-width: 90%; margin-bottom: 2rem;">
+            <p style="font-size: 1.35rem; font-weight: 500; color: #2f3f2c;"><strong>Storyteller</strong> is not just an app — it's a magical companion. Kids can <strong>create their own fairy tale</strong> or choose from a rich catalog, and then <strong>listen to it</strong> with immersive voice narration. AI brings stories to life, making bedtime magical again.</p>
+        </div>
+        <div class="grid-2">
+            <div>
+                <h3>🌙 What problem do we solve?</h3>
+                <p style="font-size: 1rem; line-height: 1.5;">Modern parents are busier than ever — less time for reading aloud. Children end up glued to passive screens, missing the warmth of storytelling. Our goal is to <strong>bring back the emotional bond</strong> through interactive, AI-generated tales that develop imagination, language skills, and quality family moments.</p>
+                <div class="prototype-frame">
+                    <img src="123.jpg" alt="Storyteller prototype" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 500%22%3E%3Crect width=%22800%22 height=%22500%22 fill=%22%23f7e0cc%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%238b5a2e%22 font-size=%2224%22%3E📱 Storyteller Prototype%3C/text%3E%3C/svg%3E'">
+                    <div class="photo-caption" style="margin-top: 16px;">🎨 Full app prototype — main screen design</div>
+                </div>
+            </div>
+            <div>
+                <h3>⚡ Innovations & magic</h3>
+                <ul class="feature-list">
+                    <li><strong>AI-generated unique tales</strong> — each story adapts to child's age and interests.</li>
+                    <li><strong>Voice narration</strong> — clear, warm reading (more voices coming in future updates).</li>
+                    <li><strong>Interactive audio-visual mode</strong> — subtle animations while listening.</li>
+                    <li><strong>Bilingual tales</strong> — learn English & native languages through fairy tales.</li>
+                </ul>
+                <div class="future-badge" style="margin-top: 20px; display: inline-block;">
+                    🎙️ Currently 5 built-in voices — expanding to 20+ voices in future releases!
+                </div>
+                <div class="photo-frame" style="margin-top: 24px;">
+                    <img src="12.jpg" alt="voice selection concept" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 180%22%3E%3Crect width=%22300%22 height=%22180%22 fill=%22%23f7e0cc%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%238b5a2e%22%3E🎤 voice library%3C/text%3E%3C/svg%3E'">
                 </div>
             </div>
         </div>
-        <div class="section-card">
-            <h2>About project</h2>
-            <div style="max-width: 85%; margin-bottom: 1.8rem;">
-                <p style="font-size: 1.2rem; color: #1f3a5f;"><strong>«Storyteller»</strong> - This is an app that creates a fairy tale itself, or you can choose a fairy tale and have it read to you in any voice.</p>
+    </div>
+
+    <!-- Features / Functions -->
+    <div class="section-card">
+        <h2><span class="deco-icon">✨</span> Magical Functions</h2>
+        <div class="grid-2">
+            <div>
+                <ul class="feature-list">
+                    <li>📖 <strong>Create your own fairy tale</strong> — choose heroes, setting, and moral lesson.</li>
+                    <li>📚 <strong>Rich catalog of 10+ tales</strong> — classic & original stories.</li>
+                    <li>🎙️ <strong>Voice narration</strong> (more voice options coming in future updates).</li>
+                    <li>🤖 <strong>AI co-writer</strong> — helps parents generate personalized bedtime stories in 2 minutes.</li>
+                </ul>
             </div>
-	    <h2>Why us?</h2>
-<div style="max-width: 85%; margin-bottom: 1.8rem;">
-                <p style="font-size: 1.2rem; color: #1f3a5f;">We are a team of enthusiasts who want to help children and their parents. We are ready to create a large catalog of fairy tales.</p>
+            <div class="visual-gallery"></div>
+        </div>
+    </div>
+
+    <!-- DESIGN section with 4 photos -->
+    <div class="section-card" id="design">
+        <h2><span class="deco-icon">🎨</span> Design Gallery</h2>
+        <div class="grid-4 design-grid">
+            <div class="design-item">
+                <img src="design1.jpg" alt="Design screen 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23fae6d2%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%239b612f%22%3E📱 design 1%3C/text%3E%3C/svg%3E'">
+                <div class="photo-caption">Home screen concept</div>
             </div>
-            <div class="grid-2">
-                <div>
-                    <h3>What problem are we solving?</h3>
-                    <p>Parents don't have time to read fairy tales to their children.That's why children spend a lot of time on their phones. They become addicted and don't develop properly. Our goal is to address this issue.</p>
-                </div>
-                <div>
-                    <h3>Innovations</h3>
-                    <ul class="feature-list">
-                        <li>AI voice acting</li>
-                        <li>You can create your own fairy tale.</li>
-                        <li>Adaptation for children</li>
-                    </ul>
-		    <div class="photo-placeholder">
-    			<img src="12.jpg" alt="Скетч персонажей">
-		    </div>
-                </div>
+            <div class="design-item">
+                <img src="design2.jpg" alt="Design screen 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23f7e0cc%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%239b612f%22%3E🎨 design 2%3C/text%3E%3C/svg%3E'">
+                <div class="photo-caption">Story creation flow</div>
+            </div>
+            <div class="design-item">
+                <img src="design3.jpg" alt="Design screen 3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23f5e0cc%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%239b612f%22%3E📖 design 3%3C/text%3E%3C/svg%3E'">
+                <div class="photo-caption">Reading mode interface</div>
+            </div>
+            <div class="design-item">
+                <img src="design4.jpg" alt="Design screen 4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 200%22%3E%3Crect width=%22300%22 height=%22200%22 fill=%22%23fae2d0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%239b612f%22%3E🎧 design 4%3C/text%3E%3C/svg%3E'">
+                <div class="photo-caption">Voice & settings panel</div>
             </div>
         </div>
-        <div class="section-card">
-            <h2>Functions</h2>
-            <div class="grid-2">
-                <div> 
-                    <ul class="feature-list">
-                        <li>Creating a fairy tale for yourself</li>
-                        <li>Choosing a fairy tale from catalog</li>
-                        <li>Voice change</li>
- <li>AI to create</li>
-                    </ul>
-                </div>
+    </div>
+
+    <!-- Tech stack + platform note -->
+    <div class="section-card" id="tech">
+        <h2><span class="deco-icon">⚙️</span> Built with passion & AI</h2>
+        <div class="grid-2">
+            <div>
+                <h3>🛠️ Technologies we use</h3>
+                <ul class="feature-list">
+                    <li>Python + PySide6 (smooth desktop app)</li>
+                    <li>OpenAI API (story generation & embeddings)</li>
+                    <li>TTS engine for voice synthesis</li>
+                    <li>GitHub for collaborative development</li>
+                </ul>
+            </div>
+            <div>
+                <h3>📱 Platform now & future</h3>
+                <ul class="feature-list">
+                    <li>💻 <strong>Currently:</strong> Web version & desktop app (Windows/Mac)</li>
+                    <li>📲 <strong>Future:</strong> Mobile app for iOS & Android (planned for 2026-2027)</li>
+                    <li>🌐 Responsive design already works on tablets</li>
+                    <li>🎯 Goal: seamless experience across all devices</li>
+                </ul>
+                <div class="future-badge" style="margin-top: 12px; display: inline-block;">📱 Mobile version coming soon — stay tuned!</div>
             </div>
         </div>
-        <div class="section-card">
-            <h2>What we used?</h2>
-            <div class="grid-2">
-                <div>
-                    <ul class="feature-list">
-                        <li>Python</li>
-                        <li>PySide6</li>
-                        <li>Github</li>
-			 <li>openAI API</li>
-                    </ul>
-                </div>
+        <div style="margin-top: 28px;">
+            <h3>🚀 Future ideas & voice expansion</h3>
+            <ul class="feature-list">
+                <li>🧠 Custom fine-tuned AI model for fairy tales (safety first)</li>
+                <li>🌍 10+ languages support with cultural diversity</li>
+                <li>🎙️ <strong>20+ voices</strong> (parents, monsters, wizards) — in development</li>
+                <li>🎨 Illustrations generated by AI while reading</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Our team -->
+    <div class="section-card" id="team">
+        <h2><span class="deco-icon">👥</span> Meet the storytellers</h2>
+        <div class="grid-2">
+            <div class="team-card">
+                <div class="avatar-frame"><img src="zhan.jpg" alt="Kenzhebek Zhanibek" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 240 240%22%3E%3Ccircle cx=%22120%22 cy=%22120%22 r=%22100%22 fill=%22%23f0cfb0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23945e2e%22%3E📸 Zhan%3C/text%3E%3C/svg%3E'"></div>
+                <span class="role-tag">✨ Idea inventor & visionary</span>
+                <h3>Kenzhebek Zhanibek</h3>
+                <p>"I believe stories shape our childhood. I'm building Storyteller to help parents connect with children even on busy days — because every child deserves magic before sleep."</p>
+            </div>
+            <div class="team-card">
+                <div class="avatar-frame"><img src="nari.jpg" alt="Nariman Mursalimov" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 240 240%22%3E%3Ccircle cx=%22120%22 cy=%22120%22 r=%22100%22 fill=%22%23e8cfb0%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23945e2e%22%3E👨‍💻 Nari%3C/text%3E%3C/svg%3E'"></div>
+                <span class="role-tag">🧠 Programmer & designer</span>
+                <h3>Nariman Mursalimov</h3>
+                <p>"Python, C++, SQL — but my real passion is building experiences that help children learn. I'm crafting the AI soul of Storyteller, making voices feel alive."</p>
             </div>
         </div>
-        <div class="section-card">
-            <h2>Design</h2>
-            <div style="display: flex; gap: 24px; flex-wrap: wrap;">
-                <div style="flex: 1 1 240px;">
-                    <div class="photo-placeholder" style="min-height: 150px;">
-                        <img src="123.jpg">
-                    </div>
-                </div>
+    </div>
+
+    <!-- Sponsor section -->
+    <div class="section-card sponsor-block" id="sponsor">
+        <h2><span class="deco-icon">🤝</span> Our inspiring sponsor</h2>
+        <div class="grid-2">
+            <div class="photo-frame" style="min-height: 260px;"><img src="ilik.jpg" alt="Kuatbek Ilyas" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 260%22%3E%3Crect width=%22300%22 height=%22260%22 fill=%22%23fbebdb%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%239b612f%22%3E🌟 Ilyas%3C/text%3E%3C/svg%3E'"></div>
+            <div>
+                <span class="chip" style="margin-bottom: 18px; display: inline-block;">⭐ main sponsor & advisor</span>
+                <h3 style="font-size: 1.9rem;">Kuatbek Ilyas</h3>
+                <p style="font-size: 1rem; line-height: 1.55; margin-bottom: 18px;">Ilyas has three younger sisters — he knows exactly how children engage with stories. He believes that technology can be a bridge to imagination, not a screen prison. His vision: <strong>"Fairy tales help develop speech, thinking, and bilingual abilities. The app must be colorful, kind, and simple — no overcomplicated menus."</strong></p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;"><span class="badge-status">💡 passion for education</span><span class="badge-status">📚 bilingual advocate</span></div>
             </div>
         </div>
-        <div class="section-card">
-            <h2>Our team</h2>
-            <div class="grid-2">
-                <div class="team-member-card">
-                    <div class="avatar-placeholder">
-                        <img src="zhan.jpg" alt="Kenzhebek Zhanibek">
-                    </div>
-                    <span class="role-tag">the inventor of ideas</span>
-                    <h3>Kenzhebek Zhanibek</h3>
-                    <p>I can negotiate with people, and I want to help Ilik.</p>
-               
-                </div>
-                <div class="team-member-card">
-                    <div class="avatar-placeholder">
-                        <img src="nari.jpg" alt="Nariman Mursalimov">
-                    </div>
-                    <span class="role-tag">programmer/designer</span>
-                    <h3>Nariman Mursalimov</h3>
-                    <p>I can code in python, c++, and I know SQL and can use it in a project. I am very interested in writing programs and helping children.</p>
-                   
-                </div>
+    </div>
+
+    <!-- Sponsor's questions & answers -->
+    <div class="section-card">
+        <h2><span class="deco-icon">❓</span> Sponsor's deep questions</h2>
+        <div class="grid-2">
+            <div style="background: #fef2e6; border-radius: 32px; padding: 28px;">
+                <h3>🗣️ Questions from Ilyas</h3>
+                <ul class="feature-list" style="list-style: none;"><li>🔹 Why are you interested in educational projects?</li><li>🔹 Do you use educational applications yourself?</li><li>🔹 Why is learning languages through fairy tales important?</li><li>🔹 What key features should the app have?</li><li>🔹 Is this project realistic for students like you?</li></ul>
+            </div>
+            <div style="background: #fff9f2; border-radius: 32px; padding: 28px;">
+                <h3>✨ Our answers & reflections</h3>
+                <ul class="feature-list"><li>We believe tech must serve kindness - stories build empathy.</li><li>Yes, we use Duolingo and Khan Academy; we love interactive learning.</li><li>Fairy tales are emotional, memorable - they make vocabulary stick naturally.</li><li>Simple UI, voice variety (expanding), offline mode, and parental controls.</li><li>Absolutely! We already have a working prototype with Python + OpenAI API. With mentorship, we can launch a beta.</li></ul>
             </div>
         </div>
-	<div class="section-card">
-    <h2>Sponsor</h2>
-    <div class="grid-2">
-        <div class="photo-placeholder" style="min-height: 280px; display: flex; align-items: center; justify-content: center;">
-            <img src="ilik.jpg" alt="Kuatbek Ilyas" style="max-width: 100%; max-height: 260px; border-radius: 20px;">
+    </div>
+
+    <!-- Roadmap -->
+    <div class="section-card" id="roadmap">
+        <h2><span class="deco-icon">🌱</span> Roadmap to enchanted future</h2>
+        <div class="grid-2">
+            <div><ul class="feature-list"><li>📌 summer 2026 - MVP with 10 tales + AI story builder (web)</li><li>📌 first half of autumn 2026 - voice expansion (10+ voices) & improved TTS</li><li>📌 second half of autumn 2026 - iOS / Android companion app development</li><li>📌 2027 — full bilingual library</li></ul></div>
+            <div style="display: flex; justify-content: center; align-items: center;"><div class="story-badge float-animation" style="background: #f0cfaa; font-size: 1.1rem;">⭐ Join the storytelling revolution ⭐</div></div>
         </div>
-        <div style="display: flex; flex-direction: column; justify-content: center;">
-            <span class="chip" style="margin-bottom: 16px; align-self: flex-start;">Our sponsor</span>
-            <h3 style="font-size: 1.6rem; margin-bottom: 16px;">Kuatbek Ilyas</h3>
-            <p style="font-size: 1.05rem; color: #2c3f5c; margin-bottom: 20px; line-height: 1.5;">
-                We chose Ilyas as our sponsor because he has three younger sisters, so he is interested in our application and understands our target audience well. He is also a very kind person who cares about children. Since our project is about an application that reads fairy tales to children, his opinion is important for us.
-Ilyas said that technology can help children learn more easily and in a more interesting way. He believes that fairy tales help develop speech, thinking, and imagination, and learning two languages is very useful for children’s future.
-He also suggested that the application should be simple, colorful, and easy to use, without complicated functions.
-            </p>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <span class="badge-status" style="background: #e8edf9;">First project</span>
-                <span class="badge-status" style="background: #e8edf9;">Very interested in our project</span>
-            </div>
-        </div>
+    </div>
+
+    <div class="footer-note">
+        <span>© 2026 · Storyteller - where AI meets bedtime magic</span>
+        <span>✨ Made with love for young dreamers ✨</span>
     </div>
 </div>
-<div class="section-card">
-    <h2>Question from sponsor</h2>
-    <div class="grid-2">
-        <div style="display: flex; flex-direction: column; justify-content: center;">
-            <span class="chip" style="margin-bottom: 16px; align-self: flex-start;">Our sponsor</span>
-            <h3 style="font-size: 1.6rem; margin-bottom: 16px;">Kuatbek Ilyas</h3>
-            <p style="font-size: 1.05rem; color: #2c3f5c; margin-bottom: 20px; line-height: 1.5;">
-        •	Why are you interested in educational projects?
-	•	Do you use educational applications?
-	•	Why is learning languages through fairy tales important?
-	•	What features should the application have?
-	•	Do you think our project is realistic for students?
-            </p>
-            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <span class="badge-status" style="background: #e8edf9;">First project</span>
-                <span class="badge-status" style="background: #e8edf9;">Very interested in our project</span>
-            </div>
-        </div>
-    </div>
-</div>
 
+<script>
+    // glitter effect
+    function createGlitter() {
+        const container = document.getElementById('glitterContainer');
+        for(let i = 0; i < 70; i++) {
+            let span = document.createElement('span');
+            let size = Math.random() * 6 + 2;
+            span.style.width = size + 'px';
+            span.style.height = size + 'px';
+            span.style.left = Math.random() * 100 + '%';
+            span.style.animationDelay = Math.random() * 15 + 's';
+            span.style.animationDuration = 8 + Math.random() * 14 + 's';
+            span.style.background = `rgba(255, 210, 120, ${Math.random() * 0.6 + 0.2})`;
+            container.appendChild(span);
+        }
+    }
+    createGlitter();
 
+    // sticky navbar shadow on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 20) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
 
-
-
-
-        <div class="section-card">
-            <h2>Future Ideas</h2>
-            <div class="grid-2">
-                <div>
-                    <ul class="feature-list">
-                        <li>Lots of voices</li>
-                        <li>Big data base of fairy tales</li>
-                        <li>Creating an algorithm for creating fairy tales</li>
-			 <li>Create and train AI model to create fairy tales</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="footer-note">
-            <span>© 2026 · Storyteller</span>
-        </div>
-    </div>
+    // smooth scroll to sections
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const targetId = btn.getAttribute('data-target');
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                const offset = 100;
+                const elementPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+                window.scrollTo({ top: elementPosition - offset, behavior: 'smooth' });
+            }
+        });
+    });
+</script>
 </body>
 </html>

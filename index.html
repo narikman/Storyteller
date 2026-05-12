@@ -752,13 +752,27 @@
             margin: 24px 0;
         }
 
-        .video-container iframe {
+        .video-container iframe,
+        .video-container video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             border-radius: 24px;
+        }
+
+        .image-container {
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
         
         @media (max-width: 900px) {
@@ -996,7 +1010,7 @@
                 <div class="message-row">
                     <div class="message-avatar sponsor">KI</div>
                     <div class="message-content">
-                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-sender">Kuatbek Ilyas - sponsor</div>
                         <div class="message-text">why are you interested in educational projects? what drives you to build something for children?</div>
                     </div>
                 </div>
@@ -1011,7 +1025,7 @@
                 <div class="message-row">
                     <div class="message-avatar sponsor">KI</div>
                     <div class="message-content">
-                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-sender">Kuatbek Ilyas - sponsor</div>
                         <div class="message-text">do you use educational applications yourself? what do you look for in them?</div>
                     </div>
                 </div>
@@ -1026,7 +1040,7 @@
                 <div class="message-row">
                     <div class="message-avatar sponsor">KI</div>
                     <div class="message-content">
-                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-sender">Kuatbek Ilyas - sponsor</div>
                         <div class="message-text">why is learning languages through fairy tales important to you?</div>
                     </div>
                 </div>
@@ -1041,7 +1055,7 @@
                 <div class="message-row">
                     <div class="message-avatar sponsor">KI</div>
                     <div class="message-content">
-                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-sender">Kuatbek Ilyas - sponsor</div>
                         <div class="message-text">what key features should this app have to truly serve families?</div>
                     </div>
                 </div>
@@ -1056,7 +1070,7 @@
                 <div class="message-row">
                     <div class="message-avatar sponsor">KI</div>
                     <div class="message-content">
-                        <div class="message-sender">kuatbek ilyas - sponsor</div>
+                        <div class="message-sender">Kuatbek Ilyas - sponsor</div>
                         <div class="message-text">is this project realistic for students? can you actually deliver?</div>
                     </div>
                 </div>
@@ -1154,58 +1168,54 @@
         <!-- 1. Version Screenshots -->
         <div class="glass-card">
             <div class="card-title">1. Product Evolution</div>
-            <p style="color: #9ca3af; margin-bottom: 24px;">Three key versions of Storyteller: Alpha (initial concept), Beta (functional prototype), Final (polished product)</p>
+            <p style="color: #9ca3af; margin-bottom: 24px;">Three key versions of Storyteller: Alpha, Beta, Final</p>
             
             <div class="screenshot-gallery">
                 <div class="screenshot-item">
                     <img src="alpha.jpg" alt="Alpha version" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22%3E%3Crect width=%22400%22 height=%22200%22 fill=%22%231a1e2a%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3EAlpha Version%3C/text%3E%3C/svg%3E'">
-                    <div class="screenshot-caption">Alpha - Initial prototype with basic story generation</div>
+                    <div class="screenshot-caption">Alpha - Basic story generation with one voice</div>
                 </div>
                 <div class="screenshot-item">
                     <img src="beta.jpg" alt="Beta version" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22%3E%3Crect width=%22400%22 height=%22200%22 fill=%22%231a1e2a%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3EBeta Version%3C/text%3E%3C/svg%3E'">
-                    <div class="screenshot-caption">Beta - Added voice synthesis and improved UI</div>
+                    <div class="screenshot-caption">Beta - Hero selection, 4 catalog stories, 6 voices</div>
                 </div>
                 <div class="screenshot-item">
                     <img src="final.jpg" alt="Final version" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 200%22%3E%3Crect width=%22400%22 height=%22200%22 fill=%22%231a1e2a%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3EFinal Version%3C/text%3E%3C/svg%3E'">
-                    <div class="screenshot-caption">Final - Full feature set with polished design</div>
+                    <div class="screenshot-caption">Final - User profiles, saved stories, catalog submissions, admin panel</div>
                 </div>
             </div>
 
             <div class="version-card">
-                <div class="version-badge">Alpha Stage</div>
-                <p><strong>Initial prototype focused on core story generation</strong></p>
+                <div class="version-badge">Alpha Version</div>
+                <p><strong>Features:</strong> Can create text and voice it with only 1 voice option</p>
                 <ul style="margin-top: 12px; padding-left: 20px; color: #9ca3af;">
-                    <li>Basic text-based story generation via OpenAI API</li>
-                    <li>Simple command-line interface</li>
-                    <li>Limited to 3 pre-defined story templates</li>
-                    <li>No voice synthesis capabilities</li>
+                    <li>Basic story generation via OpenAI API</li>
+                    <li>Single voice for text-to-speech</li>
+                    <li>Simple interface without customization</li>
                 </ul>
             </div>
 
             <div class="version-card">
-                <div class="version-badge">Beta Stage</div>
-                <p><strong>Functional desktop application with core features</strong></p>
+                <div class="version-badge">Beta Version</div>
+                <p><strong>Features:</strong> All Alpha functions + hero selection + 4 ready stories in catalog + 6 voices for narration</p>
                 <ul style="margin-top: 12px; padding-left: 20px; color: #9ca3af;">
-                    <li>Full PySide6 GUI with modern design</li>
-                    <li>5 voice options for text-to-speech</li>
-                    <li>Fairy tale catalog with 4 classic stories</li>
-                    <li>Custom story generation with hero name input</li>
-                    <li>Basic error handling and user feedback</li>
+                    <li>Hero name input for personalized stories</li>
+                    <li>4 classic tales in catalog (Kolobok, Repka, Teremok, Cinderella)</li>
+                    <li>6 voice options for text-to-speech</li>
+                    <li>Improved UI with better navigation</li>
                 </ul>
             </div>
 
             <div class="version-card">
                 <div class="version-badge">Final Version</div>
-                <p><strong>Polished product ready for deployment</strong></p>
+                <p><strong>Features:</strong> All Beta functions + user registration + profile with saved stories + large catalog + story submission + admin approval system</p>
                 <ul style="margin-top: 12px; padding-left: 20px; color: #9ca3af;">
-                    <li>Complete UI redesign with gradient themes and animations</li>
-                    <li>6 voice options including "Fable" and "Shimmer"</li>
-                    <li>Expanded fairy tale catalog with descriptions</li>
-                    <li>Threaded operations for smooth UI during generation</li>
-                    <li>Comprehensive error handling and user guidance</li>
-                    <li>Audio playback with stop functionality</li>
-                    <li>Scrollable interface for better content display</li>
-                    <li>Status indicators and progress feedback</li>
+                    <li>User registration and authentication system</li>
+                    <li>Personal profile with saved favorite stories</li>
+                    <li>Expanded fairy tale catalog</li>
+                    <li>Story submission feature for users</li>
+                    <li>Admin account to approve or reject submitted stories</li>
+                    <li>Persistent storage for user data and stories</li>
                 </ul>
             </div>
         </div>
@@ -1217,79 +1227,74 @@
             <!-- Alpha Stage Feedback -->
             <h3 style="color: #f5b450; margin: 24px 0 16px 0;">Alpha Stage</h3>
             
-            <!-- Sponsor Interview Video -->
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/placeholder" title="Sponsor Interview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <!-- Sponsor Interview - just a photo -->
+            <div class="image-container">
+                <img src="sponsor_photo.jpg" alt="Sponsor Interview" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 450%22%3E%3Crect width=%22800%22 height=%22450%22 fill=%22%231a1e2a%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3ESponsor Interview Photo%3C/text%3E%3C/svg%3E'">
             </div>
             
             <div class="feedback-card">
-                <div class="feedback-user">📋 Key Questions from Sponsor Interview</div>
+                <div class="feedback-user">Key Questions from Sponsor Interview</div>
                 <ul style="padding-left: 20px; color: #9ca3af;">
-                    <li>How will the app differentiate from existing story generators?</li>
-                    <li>What is the target age range for the stories?</li>
-                    <li>How will you ensure content is appropriate and safe?</li>
-                    <li>What are your plans for parental controls?</li>
-                    <li>How scalable is the AI story generation?</li>
+                    <li>Why are you interested in educational projects?</li>
+                    <li>Do you use educational applications yourself?</li>
+                    <li>Why is learning languages through fairy tales important?</li>
+                    <li>What key features should this app have to truly serve families?</li>
+                    <li>Is this project realistic for students?</li>
                 </ul>
             </div>
 
             <div class="feedback-card">
-                <div class="feedback-user">💡 Main Feedback Points from Alpha</div>
+                <div class="feedback-user">Main Feedback Points from Alpha</div>
                 <ul style="padding-left: 20px; color: #9ca3af;">
-                    <li><strong>UI/UX:</strong> "The interface needs to be more child-friendly and colorful"</li>
-                    <li><strong>Voice Quality:</strong> "Text-to-speech should sound more natural and expressive"</li>
-                    <li><strong>Story Length:</strong> "Stories should be shorter for younger children (2-3 minutes)"</li>
-                    <li><strong>Customization:</strong> "Parents want more control over story elements (morals, themes)"</li>
-                    <li><strong>Offline Access:</strong> "Consider offline mode for bedtime without WiFi"</li>
+                    <li><strong>UI/UX:</strong> Need more colorful and child-friendly interface</li>
+                    <li><strong>Voice Quality:</strong> Only one voice available, need more variety</li>
+                    <li><strong>Hero Customization:</strong> Users want to personalize stories with hero names</li>
+                    <li><strong>Content Library:</strong> Add ready-to-read classic stories</li>
                 </ul>
             </div>
 
             <!-- Beta Stage Feedback -->
             <h3 style="color: #f5b450; margin: 32px 0 16px 0;">Beta Stage</h3>
             
-            <!-- Sponsor Interview Beta -->
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/placeholder2" title="Beta Sponsor Interview" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>
-
             <!-- User Testing Videos -->
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0;">
                 <div class="video-container" style="margin: 0;">
-                    <iframe src="https://www.youtube.com/embed/usertest1" title="User Test 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <video controls>
+                        <source src="people1.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
                 <div class="video-container" style="margin: 0;">
-                    <iframe src="https://www.youtube.com/embed/usertest2" title="User Test 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <video controls>
+                        <source src="people2.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
             </div>
 
             <div class="feedback-card">
-                <div class="feedback-user">🎯 Usability Feedback</div>
+                <div class="feedback-user">Usability Feedback</div>
                 <ul style="padding-left: 20px; color: #9ca3af;">
-                    <li><strong>Navigation:</strong> "Tabs are intuitive but need clearer labels"</li>
-                    <li><strong>Response Time:</strong> "Story generation takes 5-10 seconds - acceptable but could be faster"</li>
-                    <li><strong>Text Size:</strong> "Font size should be adjustable for different reading abilities"</li>
-                    <li><strong>Mobile Experience:</strong> "App works on desktop, but mobile version would be great"</li>
+                    <li><strong>Convenient interface</strong> - Easy to create a new story</li>
+                    <li><strong>Safe for children</strong> - Can safely compose stories with kids</li>
                 </ul>
             </div>
 
             <div class="feedback-card">
-                <div class="feedback-user">⚙️ Functionality Feedback</div>
+                <div class="feedback-user">Functionality Feedback (Issues Found)</div>
                 <ul style="padding-left: 20px; color: #9ca3af;">
-                    <li><strong>Voice Selection:</strong> "Love having multiple voices - Nova is our favorite!"</li>
-                    <li><strong>Story Catalog:</strong> "Classic tales are good, but AI generation is the real value"</li>
-                    <li><strong>Audio Controls:</strong> "Stop button is essential - glad you added it"</li>
-                    <li><strong>Error Messages:</strong> "Clear error messages help understand what went wrong"</li>
+                    <li><strong>Does not work on long sentences</strong> - API fails with overly complex prompts</li>
+                    <li><strong>Does not work on unrelated words</strong> - Random word combinations break generation</li>
+                    <li><strong>Creates similar stories</strong> - AI generates repetitive plot structures</li>
                 </ul>
             </div>
 
             <div class="feedback-card">
-                <div class="feedback-user">💭 Suggestions for Improvement</div>
+                <div class="feedback-user">User Suggestions</div>
                 <ul style="padding-left: 20px; color: #9ca3af;">
-                    <li>Add save/export functionality for favorite stories</li>
-                    <li>Include illustrations or image generation for each story</li>
-                    <li>Create a "favorites" section to save generated tales</li>
-                    <li>Add progress tracking for parents</li>
-                    <li>Implement language selection for bilingual families</li>
+                    <li>Need to improve design and fix all bugs</li>
+                    <li>Add more voice variety</li>
+                    <li>Implement story saving feature</li>
                 </ul>
             </div>
         </div>
@@ -1299,83 +1304,60 @@
             <div class="card-title">3. Evidence of Development</div>
             <p style="color: #9ca3af; margin-bottom: 24px;">Showing the actual work done throughout the project lifecycle</p>
 
-            <!-- Code Snippets -->
-            <h3 style="color: #f5b450; margin: 24px 0 12px 0;">📝 Code Snippets</h3>
-            <div class="code-block">
-                <pre><code># AI Story Generation Core
-def generate_tale(self):
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": f"You are a children's author. Write a short fairy tale (250-350 words). Hero: {hero}"},
-            {"role": "user", "content": f"Write a tale about {hero} where {prompt}"}
-        ],
-        temperature=0.8,
-        max_tokens=600
-    )
-    return response.choices[0].message.content
-
-# Voice Synthesis Integration
-def speak_text(self):
-    response = client.audio.speech.create(
-        model="tts-1",
-        voice=voice,
-        input=text[:3000]
-    )
-    with tempfile.NamedTemporaryFile(delete=False, suffix='.mp3') as tmp_file:
-        tmp_file.write(response.content)</code></pre>
+            <!-- Code Snippet as Image -->
+            <div class="image-container">
+                <img src="code.jpg" alt="Code Snippets" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 800 400%22%3E%3Crect width=%22800%22 height=%22400%22 fill=%22%231a1e2a%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 fill=%22%23f5b450%22%3ECode Snippets - Code.jpg%3C/text%3E%3C/svg%3E'">
             </div>
 
             <!-- Before vs After -->
-            <h3 style="color: #f5b450; margin: 32px 0 16px 0;">📊 Before vs After</h3>
+            <h3 style="color: #f5b450; margin: 32px 0 16px 0;">Before vs After</h3>
             <div class="comparison-grid">
                 <div class="comparison-card">
                     <h4>Before (Alpha)</h4>
                     <ul style="text-align: left; padding-left: 20px; color: #9ca3af;">
-                        <li>❌ Command-line only interface</li>
-                        <li>❌ No voice synthesis</li>
-                        <li>❌ Fixed story templates</li>
-                        <li>❌ No error handling</li>
-                        <li>❌ Single-threaded (UI freezes)</li>
+                        <li>Single voice only</li>
+                        <li>No hero name personalization</li>
+                        <li>No catalog of stories</li>
+                        <li>No user accounts</li>
+                        <li>No story saving</li>
                     </ul>
                 </div>
                 <div class="comparison-card">
                     <h4>After (Final)</h4>
                     <ul style="text-align: left; padding-left: 20px; color: #9ca3af;">
-                        <li>✅ Modern GUI with PySide6</li>
-                        <li>✅ 6 voice options with OpenAI TTS</li>
-                        <li>✅ Dynamic AI story generation</li>
-                        <li>✅ Comprehensive error handling</li>
-                        <li>✅ Multi-threaded operations</li>
+                        <li>6 voice options (expanding to 20+)</li>
+                        <li>Hero name integration in stories</li>
+                        <li>Large catalog with classic tales</li>
+                        <li>User registration and profiles</li>
+                        <li>Save favorite stories</li>
+                        <li>Story submission with admin approval</li>
                     </ul>
                 </div>
             </div>
 
             <!-- Tools Used -->
-            <h3 style="color: #f5b450; margin: 32px 0 12px 0;">🛠️ Tools Used</h3>
+            <h3 style="color: #f5b450; margin: 32px 0 12px 0;">Tools Used</h3>
             <div class="tech-stack">
                 <span class="tech-badge">Python 3.11</span>
                 <span class="tech-badge">PySide6 (Qt6)</span>
-                <span class="tech-badge">OpenAI API (GPT-4)</span>
+                <span class="tech-badge">OpenAI API (GPT-3.5/4)</span>
                 <span class="tech-badge">OpenAI TTS</span>
                 <span class="tech-badge">Pygame</span>
+                <span class="tech-badge">SQLite</span>
                 <span class="tech-badge">Git/GitHub</span>
                 <span class="tech-badge">VS Code</span>
                 <span class="tech-badge">PyInstaller</span>
-                <span class="tech-badge">Figma (design)</span>
             </div>
 
             <!-- Changes Explanation -->
-            <h3 style="color: #f5b450; margin: 32px 0 12px 0;">📋 Key Changes Implemented</h3>
+            <h3 style="color: #f5b450; margin: 32px 0 12px 0;">Key Changes Implemented</h3>
             <div class="feedback-card">
                 <ul style="padding-left: 20px; color: #9ca3af;">
-                    <li><strong>Threading Implementation:</strong> Moved API calls to background threads to prevent UI freezing during story generation and audio synthesis</li>
-                    <li><strong>Voice Expansion:</strong> Added 6 distinct voices to cater to different preferences (Alloy, Echo, Fable, Onyx, Nova, Shimmer)</li>
-                    <li><strong>UI Redesign:</strong> Implemented modern gradient theme with responsive layout and hover effects</li>
-                    <li><strong>Catalog System:</strong> Added pre-loaded fairy tales as backup content when API is unavailable</li>
-                    <li><strong>Error Management:</strong> Comprehensive try-except blocks with user-friendly error messages</li>
-                    <li><strong>Audio Controls:</strong> Added stop functionality and proper cleanup of temporary files</li>
-                    <li><strong>Scrollable Interface:</strong> Implemented canvas-based scrolling for better content management</li>
+                    <li><strong>Alpha to Beta:</strong> Added hero name input, 4 catalog stories, expanded from 1 to 6 voices</li>
+                    <li><strong>Beta to Final:</strong> Added user registration system, profile management, story saving, expanded catalog, story submission feature, admin approval workflow</li>
+                    <li><strong>Threading Implementation:</strong> Moved API calls to background threads to prevent UI freezing</li>
+                    <li><strong>UI Redesign:</strong> Modern gradient theme with responsive layout</li>
+                    <li><strong>Error Management:</strong> Comprehensive error handling for API failures</li>
                 </ul>
             </div>
         </div>
@@ -1386,16 +1368,16 @@ def speak_text(self):
             
             <div class="reflection-grid">
                 <div class="reflection-item">
-                    <div class="reflection-q">📈 What improved the most from Alpha to Final?</div>
-                    <div class="reflection-a">The user interface and overall user experience transformed dramatically. From a basic command-line tool to a polished desktop application with gradient themes, voice selection, real-time status updates, and smooth multi-threaded operations. The addition of voice synthesis and the fairy tale catalog made the product feel complete and professional.</div>
+                    <div class="reflection-q">What improved the most from Alpha to Final?</div>
+                    <div class="reflection-a">The biggest improvement was the addition of user profiles and story management. Alpha had only basic generation with one voice. Beta added hero personalization, catalog stories, and 6 voices. Final added full user accounts, saved stories, story submissions, and admin approval - transforming from a simple generator into a complete storytelling platform.</div>
                 </div>
                 <div class="reflection-item">
-                    <div class="reflection-q">💬 What feedback was most useful?</div>
-                    <div class="reflection-a">The sponsor's emphasis on simplicity - "if a 5-year-old can't navigate it in 10 seconds, redesign it" - was invaluable. This pushed us to simplify the interface dramatically. Also, user testing feedback about voice quality led us to explore better TTS options beyond basic system voices, resulting in the integration of OpenAI's natural-sounding voices.</div>
+                    <div class="reflection-q">What feedback was most useful?</div>
+                    <div class="reflection-a">The sponsor's key questions about serving families pushed us to add user accounts and story saving. User testing revealed functionality issues (doesn't work on long sentences or unrelated words) which helped us understand API limitations. The suggestion to "improve design and fix all bugs" drove our final polish phase.</div>
                 </div>
                 <div class="reflection-item">
-                    <div class="reflection-q">🚀 What would you still improve?</div>
-                    <div class="reflection-a">Three main areas: 1) Add illustration generation to accompany stories (using DALL-E or similar), 2) Implement story saving/export functionality with PDF support, 3) Create mobile companion apps (iOS/Android). Additionally, we'd like to add offline mode with pre-downloaded content and expand to 20+ voices including parent voice cloning.</div>
+                    <div class="reflection-q">What would you still improve?</div>
+                    <div class="reflection-a">Three areas: 1) Better handling of long/complex prompts through pre-processing, 2) Add illustration generation with DALL-E, 3) Implement offline mode with pre-downloaded content, 4) Expand to 20+ voices including parent voice cloning, 5) Mobile apps for iOS and Android.</div>
                 </div>
             </div>
         </div>
